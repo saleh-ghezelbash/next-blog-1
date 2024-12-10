@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* 
+@font-face {
+  font-family: Vazir;
+  font-weight: 100;
+  font-style: normal;
+  src: url('../public/fonts/Vazir-Thin.eot');
+  src: url('../public/fonts/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/Vazir-Thin.woff2') format('woff2'), url('../public/fonts/Vazir-Thin.woff') format('woff'),
+    url('../public/fonts/Vazir-Thin.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  font-weight: 300;
+  font-style: normal;
+  src: url('../public/fonts/Vazir-Light.eot');
+  src: url('../public/fonts/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/Vazir-Light.woff2') format('woff2'), url('../public/fonts/Vazir-Light.woff') format('woff'),
+    url('../public/fonts/Vazir-Light.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  font-weight: 500;
+  font-style: normal;
+  src: url('../public/fonts/Vazir-Medium.eot');
+  src: url('../public/fonts/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/Vazir-Medium.woff2') format('woff2'),
+    url('../public/fonts/Vazir-Medium.woff') format('woff'), url('../public/fonts/Vazir-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  font-weight: bold;
+  font-style: normal;
+  src: url('../public/fonts/Vazir-Bold.eot');
+  src: url('../public/fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../public/fonts/Vazir-Bold.woff2') format('woff2'), url('../public/fonts/Vazir-Bold.woff') format('woff'),
+    url('../public/fonts/Vazir-Bold.ttf') format('truetype');
+  font-display: swap;
+} */
