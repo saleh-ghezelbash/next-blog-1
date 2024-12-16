@@ -3,7 +3,7 @@
 export default function CategoryGallery(params) {
     return (
         <div className="max-w-[1200px] mx-auto">
-            <div className="featured-posts grid md:grid-cols-2 gap-2 mt-8">
+            <div className="featured-posts grid md:grid-cols-2 gap-2">
                 <div>
                     <a className="bg-slate-300 h-60 md:h-[32rem] rounded-lg bg-cover bg-center bg-no-repeat block relative overflow-hidden group" style={{ backgroundImage: "url(https://blog.faradars.org/wp-content/uploads/2021/08/orange-and-green-icons-in-dark-background-768x451.png.webp)" }} href="/%d9%85%d8%af%d8%a7%d8%b1-%d9%85%d9%86%d8%b7%d9%82%db%8c-%da%86%db%8c%d8%b3%d8%aa/">
                         <div className="block absolute transition-opacity opacity-70 group-hover:opacity-80 w-full h-full bg-gradient-to-t from-slate-900 to-transparent">
