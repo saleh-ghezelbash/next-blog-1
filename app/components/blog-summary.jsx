@@ -18,7 +18,7 @@ export default function BlogSummary() {
                 <div className="w-4/6 overflow-hidden flex flex-col justify-between self-stretch text-right">
                     <div>
                         <div className="mb-3">
-                            <span className="px-4 py-1 bg-gray-300 rounded-sm text-xs hover:text-red-400"><a href="/category/french-language/">زبان فرانسه</a></span>
+                            <span className="px-4 py-1 bg-gray-300 rounded-sm text-xs hover:text-blue-400"><a href="/category/french-language/">زبان فرانسه</a></span>
                         </div>
                         <h2 className="text-slate-900 font-extrabold text-lg md:text-xl">
                             <a rel="bookmark" href="/participe-passe-%d8%af%d8%b1-%d9%81%d8%b1%d8%a7%d9%86%d8%b3%d9%87/">Participe Passe در فرانسه – به زبان ساده با مثال و تمرین</a></h2>
