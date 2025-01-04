@@ -37,14 +37,42 @@ const categoryItems = [
   }
 ];
 
+// const fetchAllCategories = async () => {
+//   try {
+//     const res = await fetch("/api/category");
+//     const data = await res.json();
+//     console.log("Categories: ", data);
+
+//     return data?.categories;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 export default function Navbar() {
   const [openNav, setOpenNav] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [isDark, setIsDark] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
 
   const dropdown = useRef(null);
   const trigger = useRef(null);
+
+  // const categories = await fetchAllCategories();
+
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      try {
+        const res = await fetch("/api/category");
+        const data = await res.json();
+        setCategories(data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAllCategories()
+  }, [])
 
   useEffect(() => {
     window.addEventListener(
@@ -137,18 +165,19 @@ export default function Navbar() {
                   role="menu"
                 >
                   <div className="py-1 text-right" role="none">
-                    {categoryItems.map((item) => {
+                    {categories.length > 0 ? categories.map((item) => {
                       return (
                         <Link
-                          href={item.href}
+                          key={item._id}
+                          href={`/search?cat=${item.slug}`}
                           className="block px-4 py-2 text-sm text-gray-700 
                             hover:bg-gray-100"
                           role="menuitem"
                         >
-                          {item.label}
+                          {item.title}
                         </Link>
                       )
-                    })}
+                    }): <p className="p-2">یافت نشد</p>}
                   </div>
                 </div>
               </div>

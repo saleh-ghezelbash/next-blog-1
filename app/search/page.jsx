@@ -1,15 +1,60 @@
 import Blog from "../components/blog-summary";
 import EditorSwiper from "../components/editor-swiper.jsx";
 
-export default function Search() {
+const getPostsByCategorySlug = async (slug) => {
+    try {
+        const res = await fetch(`/api/category/${slug}`);
+        const data = await res.json();
+        return data
+    } catch (error) {
+        console.log("error fetching category: ", error);
+    }
+}
+
+const getPostByTagSlug = async (slug) => {
+    try {
+        const res = await fetch(`/api/tag/${slug}`);
+        const data = await res.json();
+        return data
+    } catch (error) {
+        console.log("error fetching tag: ", error);
+    }
+}
+
+const getPostBySearchValue = async (slug) => {
+    try {
+        const res = await fetch(`/api/post/${slug}`);
+        const data = await res.json();
+        return data
+    } catch (error) {
+        console.log("error fetching posts: ", error);
+    }
+}
+
+export default function Search({ searchParams }) {
+    console.log("searchParams: ", searchParams);
+    const searchVal = ""
+    if (searchParams.cat) {
+        const searchVal = searchParams.cat
+        getPostsByCategorySlug(searchParams.cat)
+    } else if (searchParams.tag) {
+        const searchVal = searchParams.tag
+        getPostByTagSlug(searchParams.tag)
+    } else if (searchParams.s) {
+        const searchVal = searchParams.s
+        getPostBySearchValue(searchParams.s)
+    } else {
+    }
+
+
     return (
         <div className="max-w-[1200px] mx-auto">
             <div>
 
                 <div className="mb-4 mt-8 p-2 border-b text-right" style={{ direction: "rtl" }}>
-                    <p>جستجو درباره: <span>{ }</span></p>
-                    <p>برچسب: <span>{ }</span></p>
-                    <p>دسته بندی: <span>{ }</span></p>
+                    <p>جستجو درباره: <span>{ searchVal }</span></p>
+                    <p>برچسب: <span>{ searchVal }</span></p>
+                    <p>دسته بندی: <span>{ searchVal }</span></p>
                 </div>
 
                 <div className="my-2 grid grid-cols-1 lg:grid-cols-2 gap-x-4">
