@@ -1,8 +1,8 @@
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 // var URLSlug = require("mongoose-slug-generator");
-// import URLSlug from "mongoose-slug-generator"
+import URLSlug from "mongoose-slug-generator"
 
-// mongoose.plugin(URLSlug);
+mongoose.plugin(URLSlug);
 
 const CategorySchema = new Schema(
   {
@@ -13,7 +13,7 @@ const CategorySchema = new Schema(
       trim: true,
       maxlength: [40, "title cannot be grater than 40 characters"],
     },
-    slug: { type: String, slug: "title" }
+    slug: { type: String, unique: true, slug: "title" }
   },
   {
     timestamps: true,

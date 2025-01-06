@@ -3,7 +3,7 @@ import EditorSwiper from "../components/editor-swiper.jsx";
 
 const getPostsByCategorySlug = async (slug) => {
     try {
-        const res = await fetch(`/api/category/${slug}`);
+        const res = await fetch(`${process.env.NEXT_URL}/api/category/${slug}`);
         const data = await res.json();
         return data
     } catch (error) {
@@ -13,7 +13,7 @@ const getPostsByCategorySlug = async (slug) => {
 
 const getPostByTagSlug = async (slug) => {
     try {
-        const res = await fetch(`/api/tag/${slug}`);
+        const res = await fetch(`${process.env.NEXT_URL}/api/tag/${slug}`);
         const data = await res.json();
         return data
     } catch (error) {
@@ -23,7 +23,7 @@ const getPostByTagSlug = async (slug) => {
 
 const getPostBySearchValue = async (slug) => {
     try {
-        const res = await fetch(`/api/post/${slug}`);
+        const res = await fetch(`${process.env.NEXT_URL}/api/post/${slug}`);
         const data = await res.json();
         return data
     } catch (error) {
@@ -31,12 +31,15 @@ const getPostBySearchValue = async (slug) => {
     }
 }
 
-export default function Search({ searchParams }) {
+export default async function Search({ searchParams }) {
     console.log("searchParams: ", searchParams);
     const searchVal = ""
+    let data = null
     if (searchParams.cat) {
         const searchVal = searchParams.cat
-        getPostsByCategorySlug(searchParams.cat)
+        data = await getPostsByCategorySlug(searchParams.cat)
+        console.log("data::", data);
+        
     } else if (searchParams.tag) {
         const searchVal = searchParams.tag
         getPostByTagSlug(searchParams.tag)
@@ -54,7 +57,8 @@ export default function Search({ searchParams }) {
                 <div className="mb-4 mt-8 p-2 border-b text-right" style={{ direction: "rtl" }}>
                     <p>جستجو درباره: <span>{ searchVal }</span></p>
                     <p>برچسب: <span>{ searchVal }</span></p>
-                    <p>دسته بندی: <span>{ searchVal }</span></p>
+                    {/* <p>دسته بندی: <span>{ searchVal }</span></p> */}
+                    <p>دسته بندی: <span>{ data.title }</span></p>
                 </div>
 
                 <div className="my-2 grid grid-cols-1 lg:grid-cols-2 gap-x-4">

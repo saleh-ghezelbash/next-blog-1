@@ -2,28 +2,34 @@ import Category from "@/models/Category";
 import { dbConnect } from "@/utils/mongoose";
 import { NextResponse } from "next/server";
 
-export async function GET(request, { params }) {
-  await dbConnect();
-  try {
-    const categoryFound = await Category.findById(params.id);
+// export async function GET(request, { params }) {
+//   console.log("testttttttttt");
+  
+//   await dbConnect();
+//   try {
+//     const categoryFound = await Category.findOne({
+//       slug: params.id
+//     }).exec();
+//     console.log("categoryFound:", categoryFound);
+    
 
-    if (!categoryFound)
-      return NextResponse.json(
-        {
-          message: "Category not found",
-        },
-        {
-          status: 404,
-        }
-      );
+//     if (!categoryFound)
+//       return NextResponse.json(
+//         {
+//           message: "Category not found",
+//         },
+//         {
+//           status: 404,
+//         }
+//       );
 
-    return NextResponse.json(categoryFound);
-  } catch (error) {
-    return NextResponse.json(error.message, {
-      status: 400,
-    });
-  }
-}
+//     return NextResponse.json(categoryFound);
+//   } catch (error) {
+//     return NextResponse.json(error.message, {
+//       status: 400,
+//     });
+//   }
+// }
 
 export async function PUT(request, { params }) {
   const body = await request.json();
