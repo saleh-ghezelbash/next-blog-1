@@ -13,6 +13,7 @@ const CategorySchema = new Schema(
       trim: true,
       maxlength: [40, "title cannot be grater than 40 characters"],
     },
+    posts: [{type: Schema.Types.ObjectId, ref: "Post"}],
     slug: { type: String, unique: true, slug: "title" }
   },
   {

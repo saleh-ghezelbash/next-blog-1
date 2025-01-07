@@ -169,15 +169,16 @@ export default function Navbar() {
                       return (
                         <Link
                           key={item._id}
-                          href={`/search?cat=${item.slug}`}
+                          href={`/search?cat_id=${item._id}`}
                           className="block px-4 py-2 text-sm text-gray-700 
                             hover:bg-gray-100"
                           role="menuitem"
+                          onClick={() => setIsMenuOpen(false)}
                         >
                           {item.title}
                         </Link>
                       )
-                    }): <p className="p-2">یافت نشد</p>}
+                    }): <p className="p-2">در حال بازیابی...</p>}
                   </div>
                 </div>
               </div>
