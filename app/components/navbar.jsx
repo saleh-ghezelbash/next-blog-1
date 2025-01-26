@@ -17,6 +17,7 @@ import {
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { BsMoon, BsSun } from "react-icons/bs";
 import Link from "next/link";
+import { getCategories } from "@/_lib/data-service";
 
 const categoryItems = [
   {
@@ -34,7 +35,7 @@ const categoryItems = [
   {
     label: "ورزش",
     href: "sport",
-  }
+  },
 ];
 
 // const fetchAllCategories = async () => {
@@ -62,22 +63,31 @@ export default function Navbar() {
   // const categories = await fetchAllCategories();
 
   useEffect(() => {
+    // const fetchAllCategories = async () => {
+    //   try {
+    //     const res = await fetch("/api/category");
+    //     const data = await res.json();
+    //     setCategories(data)
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
     const fetchAllCategories = async () => {
       try {
-        const res = await fetch("/api/category");
-        const data = await res.json();
-        setCategories(data)
+        const data = await getCategories();
+        // const data = await res.json();
+        setCategories(data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchAllCategories()
-  }, [])
+    fetchAllCategories();
+  }, []);
 
   useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
 
@@ -111,14 +121,17 @@ export default function Navbar() {
     <div className="sticky top-0 z-10">
       <StickyNavbar className="h-max max-w-[1200px] mx-auto border-none rounded-none px-4 py-2 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900">
-
           <div className="flex items-center justify-between w-full">
             <div className="flex justify-between items-center gap-5">
-              <button className="hidden lg:inline-block border rounded-md px-2 py-1 text-sm hover:border-blue-400 hover:shadow-md"><span>ورود / ثبت نام</span></button>
-              <div>
-                {
-                  isDark ? <BsMoon onClick={() => setIsDark(!isDark)} size={20} /> : <BsSun onClick={() => setIsDark(!isDark)} size={20} />
-                }
+              <button className="hidden lg:inline-block border rounded-md px-2 py-1 text-sm hover:border-blue-400 hover:shadow-md">
+                <span>ورود / ثبت نام</span>
+              </button>
+              <div className="cursor-pointer">
+                {isDark ? (
+                  <BsMoon onClick={() => setIsDark(!isDark)} size={20} />
+                ) : (
+                  <BsSun onClick={() => setIsDark(!isDark)} size={20} />
+                )}
               </div>
             </div>
             <div className="w-72">
@@ -126,10 +139,11 @@ export default function Navbar() {
                 className="!border !border-gray-300 bg-white text-gray-900 shadow-sm shadow-gray-900/5 placeholder:text-gray-500 placeholder:opacity-100 focus:!border-blue-400 focus:!border-t-blue-400 focus:shadow-md"
                 labelProps={{
                   className: "hidden",
-                }} icon={<FaMagnifyingGlass />} />
+                }}
+                icon={<FaMagnifyingGlass />}
+              />
             </div>
             <div className="flex gap-4 items-center">
-
               <div className="mr-4 hidden lg:block">
                 <span>تماس با ما</span>
               </div>
@@ -161,29 +175,39 @@ export default function Navbar() {
                   ref={dropdown}
                   className={`absolute right-0 mt-2 w-56 
                     rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
-                    focus:outline-none ${isMenuOpen === true ? "block" : "hidden"}`}
+                    focus:outline-none ${
+                      isMenuOpen === true ? "block" : "hidden"
+                    }`}
                   role="menu"
                 >
                   <div className="py-1 text-right" role="none">
-                    {categories.length > 0 ? categories.map((item) => {
-                      return (
-                        <Link
-                          key={item._id}
-                          href={`/search?cat_id=${item._id}`}
-                          className="block px-4 py-2 text-sm text-gray-700 
+                    {categories.length > 0 ? (
+                      categories.map((item) => {
+                        return (
+                          <Link
+                            key={item.id}
+                            href={`/search?catid=${item.id}`}
+                            className="block px-4 py-2 text-sm text-gray-700 
                             hover:bg-gray-100"
-                          role="menuitem"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {item.title}
-                        </Link>
-                      )
-                    }): <p className="p-2">در حال بازیابی...</p>}
+                            role="menuitem"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {item.name_fa}
+                          </Link>
+                        );
+                      })
+                    ) : (
+                      <p className="p-2" dir="rtl">
+                        در حال بازیابی...
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
 
-              <div className="font-bold text-2xl"><Link href={"/"}>بلاگ</Link></div>
+              <div className="font-bold text-2xl">
+                <Link href={"/"}>بلاگ</Link>
+              </div>
             </div>
             <IconButton
               variant="text"
