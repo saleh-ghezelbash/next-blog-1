@@ -18,13 +18,16 @@ model category {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model comment {
-  id         BigInt   @id @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  user_id    BigInt?
-  post_id    BigInt?
-  body       String?
-  post       post?    @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user       user?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id            BigInt    @id @default(autoincrement())
+  created_at    DateTime  @default(now()) @db.Timestamptz(6)
+  user_id       BigInt?
+  post_id       BigInt?
+  body          String?
+  parent_id     BigInt?
+  comment       comment?  @relation("commentTocomment", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_comment comment[] @relation("commentTocomment")
+  post          post?     @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user          user?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

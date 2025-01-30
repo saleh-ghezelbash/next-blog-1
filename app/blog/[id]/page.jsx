@@ -13,6 +13,7 @@ import {
   getSemilarPostsByCategoryId,
   getTagsByPostId,
 } from "@/_lib/data-service";
+import { getShamsiDate } from "@/utils/format-date";
 
 export default async function Blog({ params }) {
   const id = await params.id;
@@ -22,19 +23,14 @@ export default async function Blog({ params }) {
   const [author, postsCategory, comments, likesNum, tags] = await Promise.all([
     getAuthorById(post.user_id),
     getSemilarPostsByCategoryId(post.category_id),
-    getPostComments(post.id, post.user_id),
+    getPostComments(post.id),
     getPostLikesNumber(post.id),
     getTagsByPostId(post.id),
   ]);
+    
   // const author = await getAuthorById(post.user_id);
   // const postsCategory = await getSemilarPostsByCategoryId(post.category_id);
   // const comments = await getPostComments(post.id, post.user_id);
-
-  function getDateFormat(uDate, option) {
-    // let d = new Intl.DateTimeFormat("fa-IR", option).format(uDate);
-    let d = new Date(uDate).toLocaleDateString("fa-IR");
-    return d;
-  }
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -62,7 +58,7 @@ export default async function Blog({ params }) {
               </div>
             </div>
             <div className="flex gap-3 text-sm">
-              <span>{getDateFormat(post.created_at)}</span>
+              <span>{getShamsiDate(post.created_at)}</span>
               <span>{author.name}</span>
             </div>
           </div>

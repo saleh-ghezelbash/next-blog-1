@@ -1,24 +1,31 @@
-export default function Comment({ children }) {
+"use client"
+import { getShamsiDate } from "@/utils/format-date";
+import Link from "next/link";
+
+export default function Comment({ comment }) {
+    const nestedComments = (comment.children || []).map(comment => {
+        return <Comment comment={comment} />;
+      });
+    
     return (
-        <div className="border-r px-6 mt-3">
+        <div className="border-r p-4 mt-3">
             <div>
                 <div className="flex items-center mb-6 gap-2">
-                    <img src="https://randomuser.me/api/portraits/men/97.jpg" alt="Avatar" className="w-12 h-12 rounded-full" />
+                    <img src={comment.user.avatar ? comment.user.avatar : '/images/avatar.jpg'} alt="Avatar" className="w-12 h-12 rounded-full" />
                     <div>
-                        <div className="text-lg font-medium text-gray-800">صالح قزلباش</div>
-                        <div className="text-gray-500">1403/10/25</div>
+                        <Link href={`/user/${comment.user.id}`} className="text-lg font-medium text-gray-800">{comment.user.name}</Link>
+                        <div className="text-gray-500">{getShamsiDate(comment.created_at)}</div>
                     </div>
                 </div>
-                <p className="text-lg leading-relaxed mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lorem
-                    nulla. Donec consequat urna a tortor sagittis lobortis.</p>
+                <p className="text-lg leading-relaxed mb-6">{comment.body}</p>
                 <div className="flex justify-between items-center">
                     <div>
-                        <a href="#" className="text-gray-500 hover:text-gray-700 mr-4"><i className="far fa-thumbs-up"></i> لایک</a>
+                        <button className="border px-2 py-1 rounded-md cursor-pointer text-xs hover:border-purple-300">پاسخ</button>
                     </div>
                 </div>
             </div>
             <div>
-                {children}
+                {nestedComments}
             </div>
         </div>
     )

@@ -1,37 +1,8 @@
+'use server'
+
 import { getPostsByCategoryId } from "@/_lib/data-service";
 import Blog from "../components/blog-summary";
 import EditorSwiper from "../components/editor-swiper.jsx";
-
-// const getPostsByCategoryId = async (id) => {
-//   try {
-//     const res = await fetch(`${process.env.NEXT_URL}/api/category/${id}/posts`);
-//     const data = await res.json();
-//     console.log("data:", data);
-//     return data;
-//   } catch (error) {
-//     console.log("error fetching category posts: ", error);
-//   }
-// };
-
-// const getPostByTagSlug = async (slug) => {
-//   try {
-//     const res = await fetch(`${process.env.NEXT_URL}/api/tag/${slug}`);
-//     const data = await res.json();
-//     return data;
-//   } catch (error) {
-//     console.log("error fetching tag: ", error);
-//   }
-// };
-
-// const getPostBySearchValue = async (slug) => {
-//   try {
-//     const res = await fetch(`${process.env.NEXT_URL}/api/post/${slug}`);
-//     const data = await res.json();
-//     return data;
-//   } catch (error) {
-//     console.log("error fetching posts: ", error);
-//   }
-// };
 
 export default async function Search({ searchParams }) {
   let data = null;
@@ -39,7 +10,7 @@ export default async function Search({ searchParams }) {
   if (searchParams.catid) {
     data = await getPostsByCategoryId(searchParams.catid);
     searchVal = data[0].category.name;
-  } else if (searchParams.tag) {
+  } else if (searchParams.tagid) {
     getPostByTagSlug(searchParams.tag);
   } else if (searchParams.s) {
     getPostBySearchValue(searchParams.s);

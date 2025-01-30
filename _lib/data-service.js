@@ -1,5 +1,5 @@
 import prisma from "@/prisma/prisma";
-// import { supabase } from "./supabase";
+import { comment } from "postcss";
 
 export const getCategories = async () => {
   const data = await prisma.category.findMany();
@@ -55,17 +55,15 @@ export const getSemilarPostsByCategoryId = async (id) => {
   return data;
 };
 
-export const getPostComments = async (postId, userId) => {
+export const getPostComments = async (postId) => {
   const data = await prisma.comment.findMany({
     where: {
-      post_id: postId,
-      user_id: userId,
+      post_id: postId
     },
     include: {
-      user: true,
+      user: true
     },
   });
-
   return data;
 };
 

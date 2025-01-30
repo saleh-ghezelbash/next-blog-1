@@ -11,9 +11,6 @@
   "dependencies": {
     "@material-tailwind/react": "^2.1.10",
     "@prisma/client": "^6.2.1",
-    "@supabase/supabase-js": "^2.48.0",
-    "mongoose": "^8.9.2",
-    "mongoose-slug-generator": "^1.0.4",
     "next": "14.2.18",
     "prisma": "^6.2.1",
     "react": "^18",
