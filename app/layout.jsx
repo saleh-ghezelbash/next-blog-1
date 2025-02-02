@@ -3,12 +3,12 @@ import { Vazirmatn } from "next/font/google";
 // import { Swiper, SwiperSlide } from 'swiper/react';
 import "./globals.css";
 import Navbar from "./components/navbar.jsx";
-import { Footer } from "./components/footer";
+import Footer from "./components/footer.jsx";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { getCategories } from "@/_lib/data-service";
+// import { getCategories } from "@/_lib/data-service";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",

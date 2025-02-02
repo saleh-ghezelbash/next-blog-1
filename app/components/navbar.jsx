@@ -19,37 +19,6 @@ import { BsMoon, BsSun } from "react-icons/bs";
 import Link from "next/link";
 import { getCategories } from "@/_lib/data-service";
 
-const categoryItems = [
-  {
-    label: "تکنولوژی",
-    href: "tech",
-  },
-  {
-    label: "اقتصاد",
-    href: "econ",
-  },
-  {
-    label: "هنر",
-    href: "art",
-  },
-  {
-    label: "ورزش",
-    href: "sport",
-  },
-];
-
-// const fetchAllCategories = async () => {
-//   try {
-//     const res = await fetch("/api/category");
-//     const data = await res.json();
-//     console.log("Categories: ", data);
-
-//     return data?.categories;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
 export default function Navbar() {
   const [openNav, setOpenNav] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -60,22 +29,27 @@ export default function Navbar() {
   const dropdown = useRef(null);
   const trigger = useRef(null);
 
-  // const categories = await fetchAllCategories();
 
   useEffect(() => {
     // const fetchAllCategories = async () => {
     //   try {
     //     const res = await fetch("/api/category");
+    //     console.log("res:", res);
+        
     //     const data = await res.json();
+    //     console.log("d:::",data);
+        
     //     setCategories(data)
     //   } catch (error) {
     //     console.log(error);
     //   }
     // };
+
     const fetchAllCategories = async () => {
+      
       try {
         const data = await getCategories();
-        // const data = await res.json();
+        
         setCategories(data);
       } catch (error) {
         console.log(error);

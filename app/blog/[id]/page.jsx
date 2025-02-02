@@ -3,7 +3,7 @@ import CommentList from "@/app/components/comment-list";
 import Link from "next/link";
 import { FaInbox } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
-import { FaHeart } from "react-icons/fa6";
+// import { FaHeart } from "react-icons/fa6";
 import { FaRegCommentDots } from "react-icons/fa6";
 import {
   getAuthorById,
@@ -14,6 +14,7 @@ import {
   getTagsByPostId,
 } from "@/_lib/data-service";
 import { getShamsiDate } from "@/utils/format-date";
+import Like from "@/app/components/like";
 
 export default async function Blog({ params }) {
   const id = await params.id;
@@ -27,7 +28,7 @@ export default async function Blog({ params }) {
     getPostLikesNumber(post.id),
     getTagsByPostId(post.id),
   ]);
-    
+
   // const author = await getAuthorById(post.user_id);
   // const postsCategory = await getSemilarPostsByCategoryId(post.category_id);
   // const comments = await getPostComments(post.id, post.user_id);
@@ -74,12 +75,8 @@ export default async function Blog({ params }) {
           />
         </div>
         <div className="my-4">{post?.body}</div>
-        {/* <div className="flex gap-2 items-center my-16 justify-center border-t p-4">
-                    <span>آیا این مطلب برای شما مفید بود؟</span>
-                    <div className="cursor-pointer">
-                        {isLiked ? <FaHeart size={24} color="red" onClick={() => setIsLiked(!isLiked)} /> : <FaRegHeart size={24} color="red" onClick={() => setIsLiked(!isLiked)} />}
-                    </div>
-                </div> */}
+        <Like/>
+        
         <div className="post-tags my-10 print:hidden">
           <div className="text-slate-500 font-extrabold border-b border-slate-200 py-2 mb-2">
             برچسب‌ها
@@ -88,7 +85,7 @@ export default async function Blog({ params }) {
             <div className="collapsible-tags-content overflow-hidden relative max-h-[31px]">
               <div className="collapsible-tags-content-inner">
                 {tags.map((tag) => (
-                  <div className="rounded-md px-2 py-1 text-sm border hover:border-blue-400 hover:shadow-md inline-block cursor-pointer mx-2">
+                  <div key={tag.id} className="rounded-md px-2 py-1 text-sm border hover:border-blue-400 hover:shadow-md inline-block cursor-pointer mx-2">
                     <Link href={`/search?type=tag&tagid=${tag.id}`}>
                       {tag.name}
                     </Link>
@@ -121,41 +118,9 @@ export default async function Blog({ params }) {
         </div>
         <div className="my-8">
           <p className="my-2 p-2 border-b">ارسال کامنت</p>
-          <form className="my-4 bg-gray-100 rounded-md p-4">
-            <div className="flex gap-4">
-              <div className="w-full">
-                <label className="block mb-1 text-sm text-slate-600 mt-4">
-                  نام
-                </label>
-                <input
-                  type="text"
-                  className="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                />
-              </div>
-              <div className="w-full">
-                <label className="block mb-1 text-sm text-slate-600 mt-4">
-                  ایمیل
-                </label>
-                <input
-                  type="text"
-                  className="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                />
-              </div>
-            </div>
-
-            <div className="w-full mt-6">
-              <label className="block mb-1 text-sm text-slate-600 mt-4">
-                متن کامنت
-              </label>
-              <textarea
-                className="w-full bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                rows="10"
-              ></textarea>
-            </div>
-
-            <button className="mt-4 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-              ارسال
-            </button>
+          <form action="">
+            <textarea className="w-full rounded-md p-2" rows="5" defaultValue={"نظر خود را وارد کنید..."}></textarea>
+            <button className="border px-2 py-1 rounded-md cursor-pointer text-xs hover:border-blue-400">ارسال</button>
           </form>
         </div>
         <div className="my-8">

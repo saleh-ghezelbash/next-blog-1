@@ -1,9 +1,9 @@
+'use server' 
+
 import prisma from "@/prisma/prisma";
-import { comment } from "postcss";
 
 export const getCategories = async () => {
   const data = await prisma.category.findMany();
-
   return data;
 };
 
