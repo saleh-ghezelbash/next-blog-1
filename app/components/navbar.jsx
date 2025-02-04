@@ -18,6 +18,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { BsMoon, BsSun } from "react-icons/bs";
 import Link from "next/link";
 import { getCategories } from "@/_lib/data-service";
+import ThemeToggle from "./theme-toggle";
 
 export default function Navbar() {
   const [openNav, setOpenNav] = useState(false);
@@ -35,10 +36,10 @@ export default function Navbar() {
     //   try {
     //     const res = await fetch("/api/category");
     //     console.log("res:", res);
-        
+
     //     const data = await res.json();
     //     console.log("d:::",data);
-        
+
     //     setCategories(data)
     //   } catch (error) {
     //     console.log(error);
@@ -46,10 +47,10 @@ export default function Navbar() {
     // };
 
     const fetchAllCategories = async () => {
-      
+
       try {
         const data = await getCategories();
-        
+
         setCategories(data);
       } catch (error) {
         console.log(error);
@@ -100,17 +101,11 @@ export default function Navbar() {
               <button className="hidden lg:inline-block border rounded-md px-2 py-1 text-sm hover:border-blue-400 hover:shadow-md">
                 <span>ورود / ثبت نام</span>
               </button>
-              <div className="cursor-pointer">
-                {isDark ? (
-                  <BsMoon onClick={() => setIsDark(!isDark)} size={20} />
-                ) : (
-                  <BsSun onClick={() => setIsDark(!isDark)} size={20} />
-                )}
-              </div>
+              <ThemeToggle />
             </div>
             <div className="w-72">
               <Input
-                className="!border !border-gray-300 bg-white text-gray-900 shadow-sm shadow-gray-900/5 placeholder:text-gray-500 placeholder:opacity-100 focus:!border-blue-400 focus:!border-t-blue-400 focus:shadow-md"
+                className="!border !border-gray-300 bg-white text-gray-900 shadow-sm shadow-gray-900/5 placeholder:text-gray-500 placeholder:opacity-100 focus:!border-blue-400 focus:!border-t-blue-400 focus:shadow-md !rounded-3xl"
                 labelProps={{
                   className: "hidden",
                 }}
@@ -119,7 +114,7 @@ export default function Navbar() {
             </div>
             <div className="flex gap-4 items-center">
               <div className="mr-4 hidden lg:block">
-                <span>تماس با ما</span>
+                <Link href={"/contact"}>تماس با ما</Link>
               </div>
               <div className="relative">
                 <button
@@ -149,8 +144,7 @@ export default function Navbar() {
                   ref={dropdown}
                   className={`absolute right-0 mt-2 w-56 
                     rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
-                    focus:outline-none ${
-                      isMenuOpen === true ? "block" : "hidden"
+                    focus:outline-none ${isMenuOpen === true ? "block" : "hidden"
                     }`}
                   role="menu"
                 >

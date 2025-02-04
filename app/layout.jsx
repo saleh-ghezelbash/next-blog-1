@@ -37,7 +37,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`${vazir.className} antialiased`}>
+      <body className={`${vazir.className} antialiased bg-white dark:bg-black`}>
         <Navbar />
         {children}
         <Footer />
