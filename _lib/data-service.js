@@ -90,3 +90,48 @@ export const getTagsByPostId = async (postId) => {
 
   return data;
 };
+
+export const getLatestPost = async (skip) => {
+  console.log("skip::", skip);
+  
+  const data = await prisma.post.findMany({
+    skip,
+    take: 7,
+    orderBy: {
+      created_at: 'desc'
+    },
+    include: {
+      category: true,
+      user: true,
+      _count: {
+        select: { comment: true, like: true },
+      },
+    },
+  })
+  console.log("posts: ", data);
+  
+  return data;
+}
+
+export const getLatestCategoryByName = async (category) => {
+  const data = await prisma.post.findMany({
+    where:{
+      category: {
+        is: {
+          name: category
+        }
+      }
+    },
+    skip: 0,
+    take: 5,
+    orderBy: {
+      created_at: 'desc'
+    },
+    include: {
+      category: true,
+    },
+  })
+  // console.log("post by category:", data);
+  
+  return data;
+}
