@@ -1,4 +1,4 @@
-'use server' 
+'use server'
 
 import prisma from "@/prisma/prisma";
 
@@ -93,7 +93,7 @@ export const getTagsByPostId = async (postId) => {
 
 export const getLatestPost = async (skip) => {
   console.log("skip::", skip);
-  
+
   const data = await prisma.post.findMany({
     skip,
     take: 7,
@@ -108,14 +108,13 @@ export const getLatestPost = async (skip) => {
       },
     },
   })
-  console.log("posts: ", data);
-  
+
   return data;
 }
 
 export const getLatestCategoryByName = async (category) => {
   const data = await prisma.post.findMany({
-    where:{
+    where: {
       category: {
         is: {
           name: category
@@ -131,7 +130,62 @@ export const getLatestCategoryByName = async (category) => {
       category: true,
     },
   })
-  // console.log("post by category:", data);
-  
+
+  return data;
+}
+
+export const getPostBySearchValue = async (val) => {
+  const data = await prisma.post.findMany({
+    where: {
+      OR: [
+        {
+          title: {
+            contains: val,
+          },
+        },
+        { body: { contains: val } },
+      ]
+    },
+    skip: 0,
+    take: 5,
+    orderBy: {
+      created_at: 'desc'
+    },
+    include: {
+      category: true,
+      user: true,
+      _count: {
+        select: { comment: true, like: true },
+      },
+    },
+  })
+  console.log("post by search val:", data);
+
+  return data;
+}
+
+export const getMostCommentsPosts = async () => {
+  const data = await prisma.post.findMany({
+    skip: 0,
+    take: 12,
+    orderBy: [
+      {
+        created_at: 'desc'
+      }, {
+        comment: {
+          _count: 'asc'
+        }
+      }
+    ],
+    include: {
+      category: true,
+      user: true,
+      _count: {
+        select: { comment: true, like: true },
+      },
+    },
+  })
+  console.log("getMostCommentsPosts:", data);
+
   return data;
 }

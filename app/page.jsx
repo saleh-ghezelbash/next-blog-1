@@ -21,7 +21,7 @@ export default function Home() {
       <CategorySwiper />
       <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row w-full gap-6 mt-6">
         <div className="w-full lg:w-1/3">
-          <NewestCategory category={"sport"}/>
+          <NewestCategory category={"ai"}/>
         </div>
         <div className="w-full lg:w-2/3">
           <BlogList />

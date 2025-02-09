@@ -10,11 +10,11 @@ export default async function NewestCategoryList({ category }) {
     <div className="border overflow-hidden rounded-md p-4 text-right">
 
       <h1 className="font-bold text-xl mb-4 pb-4 border-b">
-        <p>تازه های {posts[0].category.name_fa}</p>
+        <p>تازه های {posts[0]?.category.name_fa}</p>
       </h1>
 
       <div>
-        {posts.map(post => (
+        {posts.length > 0 ? posts.map(post => (
           <div className="my-2" key={post.id}>
             <div className="flex justify-between items-center">
               <Link href={`/blog/${post.id}`}>
@@ -25,7 +25,7 @@ export default async function NewestCategoryList({ category }) {
               </Link>
             </div>
           </div>
-        ))}
+        )) : <p className="text-center">موردی برای نمایش وجود ندارد</p>}
       </div>
     </div>
   )

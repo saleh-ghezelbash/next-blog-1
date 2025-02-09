@@ -1,6 +1,6 @@
 'use server'
 
-import { getPostsByCategoryId } from "@/_lib/data-service";
+import { getPostBySearchValue, getPostsByCategoryId } from "@/_lib/data-service";
 import Blog from "../components/blog-summary";
 import EditorSwiper from "../components/editor-swiper.jsx";
 
@@ -13,7 +13,8 @@ export default async function Search({ searchParams }) {
   } else if (searchParams.tagid) {
     getPostByTagSlug(searchParams.tag);
   } else if (searchParams.s) {
-    getPostBySearchValue(searchParams.s);
+    data = await getPostBySearchValue(searchParams.s);
+    searchVal = searchParams.s
   } else {
   }
 
@@ -39,7 +40,7 @@ export default async function Search({ searchParams }) {
                         )) : <p>پستی برای نمایش وجود ندارد</p>
                     } */}
           {data.map((item) => (
-            <Blog />
+            <Blog item={item} key={item.id} />
           ))}
         </div>
 

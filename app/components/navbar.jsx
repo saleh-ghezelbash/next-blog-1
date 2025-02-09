@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import {
   Navbar as StickyNavbar,
   MobileNav,
@@ -17,40 +17,42 @@ import {
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { BsMoon, BsSun } from "react-icons/bs";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
 import { getCategories } from "@/_lib/data-service";
 import ThemeToggle from "./theme-toggle";
 
 export default function Navbar() {
+  const router = useRouter()
   const [openNav, setOpenNav] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [isDark, setIsDark] = useState(false);
-  const closeMenu = () => setIsMenuOpen(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [focused, setFocused] = useState(false)
 
+  const searchDivRef = useRef(null);
   const dropdown = useRef(null);
   const trigger = useRef(null);
 
+  useEffect(() => {
+    if (focused) {
+      searchDivRef.current.classList.add('!border-blue-400');
+      searchDivRef.current.classList.add('!border-t-blue-400');
+      searchDivRef.current.classList.add('shadow-md');
+    } else {
+      searchDivRef.current.classList.remove('!border-blue-400');
+      searchDivRef.current.classList.remove('!border-t-blue-400');
+      searchDivRef.current.classList.remove('shadow-md');
+    }
+  }, [focused])
+
+  const closeMenu = () => setIsMenuOpen(false);
+
+
 
   useEffect(() => {
-    // const fetchAllCategories = async () => {
-    //   try {
-    //     const res = await fetch("/api/category");
-    //     console.log("res:", res);
-
-    //     const data = await res.json();
-    //     console.log("d:::",data);
-
-    //     setCategories(data)
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
     const fetchAllCategories = async () => {
-
       try {
         const data = await getCategories();
-
         setCategories(data);
       } catch (error) {
         console.log(error);
@@ -92,6 +94,16 @@ export default function Navbar() {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  const handleSearch = () => {
+    router.push(`/search?s=${searchValue}`)
+  }
+
+  const handleKeyDown = function (e) {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  }
+
   return (
     <div className="sticky top-0 z-10">
       <StickyNavbar className="h-max max-w-[1200px] mx-auto border-none rounded-none px-4 py-2 lg:px-8 lg:py-4">
@@ -104,13 +116,18 @@ export default function Navbar() {
               <ThemeToggle />
             </div>
             <div className="w-72">
-              <Input
-                className="!border !border-gray-300 bg-white text-gray-900 shadow-sm shadow-gray-900/5 placeholder:text-gray-500 placeholder:opacity-100 focus:!border-blue-400 focus:!border-t-blue-400 focus:shadow-md !rounded-3xl"
-                labelProps={{
-                  className: "hidden",
-                }}
-                icon={<FaMagnifyingGlass />}
-              />
+              <div ref={searchDivRef} className="flex gap-2 items-center px-2 overflow-hidden !border bg-white text-gray-900 shadow-sm shadow-gray-900/5 placeholder:opacity-100 !rounded-3xl">
+                <input
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
+                  type="text"
+                  className="py-2 focus:outline-none w-full bg-white text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                />
+                <FaMagnifyingGlass onClick={handleSearch} className="cursor-pointer text-gray-500" size={24} />
+              </div>
             </div>
             <div className="flex gap-4 items-center">
               <div className="mr-4 hidden lg:block">
