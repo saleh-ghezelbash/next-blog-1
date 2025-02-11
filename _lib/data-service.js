@@ -91,12 +91,12 @@ export const getTagsByPostId = async (postId) => {
   return data;
 };
 
-export const getLatestPost = async (skip) => {
+export const getLatestPosts = async (skip) => {
   console.log("skip::", skip);
 
   const data = await prisma.post.findMany({
     skip,
-    take: 7,
+    take: 2,
     orderBy: {
       created_at: 'desc'
     },
@@ -108,6 +108,7 @@ export const getLatestPost = async (skip) => {
       },
     },
   })
+console.log("latest:", data);
 
   return data;
 }
@@ -170,11 +171,12 @@ export const getMostCommentsPosts = async () => {
     take: 12,
     orderBy: [
       {
-        created_at: 'desc'
-      }, {
         comment: {
-          _count: 'asc'
+          _count: 'desc'
         }
+      },
+      {
+        created_at: 'desc'
       }
     ],
     include: {
@@ -185,7 +187,32 @@ export const getMostCommentsPosts = async () => {
       },
     },
   })
-  console.log("getMostCommentsPosts:", data);
+  return data;
+}
 
+export const getMostLikedPosts = async () => {
+  const data = await prisma.post.findMany({
+    skip: 0,
+    take: 12,
+    orderBy: [
+      {
+        like: {
+          _count: 'desc'
+        }
+      },
+      {
+        created_at: 'desc'
+      }
+    ],
+    include: {
+      category: true,
+      user: true,
+      _count: {
+        select: { comment: true, like: true },
+      },
+    },
+  })
+  console.log("like: ", data);
+  
   return data;
 }

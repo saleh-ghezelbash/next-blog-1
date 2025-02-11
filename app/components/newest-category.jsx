@@ -1,9 +1,10 @@
-import { getLatestCategoryByName } from "@/_lib/data-service";
+import { getLatestCategoryByName, getMostLikedPosts } from "@/_lib/data-service";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function NewestCategoryList({ category }) {
-  const posts = await getLatestCategoryByName(category)
+export default async function NewestCategoryList() {
+  // const posts = await getLatestCategoryByName()
+  const posts = await getMostLikedPosts()
 
 
   return (

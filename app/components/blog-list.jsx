@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Blog from "./blog-summary.jsx";
-import { getLatestPost } from "@/_lib/data-service.js";
+import { getLatestPosts } from "@/_lib/data-service.js";
 export default function BlogList() {
-    const [postNum, setPostNum] = useState(7)
+    const [postNum, setPostNum] = useState(0)
     const [blogs, setBlogs] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
@@ -12,16 +12,17 @@ export default function BlogList() {
         const fetchLatestPosts = async () => {
             setIsLoading(true)
             try {
-                const data = await getLatestPost(postNum);
+                const data = await getLatestPosts(postNum);
                 setIsLoading(false)
                 setBlogs(b => [...b, ...data]);
+                // setBlogs(data)
             } catch (error) {
                 console.log(error);
                 setIsLoading(false)
             }
         };
         fetchLatestPosts();
-    }, [])
+    }, [postNum])
 
     return (
         <div className="overflow-hidden py-4">
@@ -37,7 +38,7 @@ export default function BlogList() {
                 blogs.length > 0 && <div className="my-2 flex items-center justify-center">
                     <button onClick={() => setPostNum((num) => num + 5)} className="py-1 px-2 border rounded-lg hover:border-blue-400">
                         {
-                            isLoading ? <p>در حال دریافت...</p> : <p>نمایش بیشتر</p>
+                            isLoading ? <p>در حال دریافت...</p> : <p onClick={() => setPostNum(perv => perv + 1)}>نمایش بیشتر</p>
                         }
                     </button>
                 </div>
