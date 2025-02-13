@@ -75,8 +75,8 @@ export default async function Blog({ params }) {
           />
         </div>
         <div className="my-4">{post?.body}</div>
-        <Like/>
-        
+        <Like />
+
         <div className="post-tags my-10 print:hidden">
           <div className="text-slate-500 font-extrabold border-b border-slate-200 py-2 mb-2">
             برچسب‌ها
@@ -85,10 +85,11 @@ export default async function Blog({ params }) {
             <div className="collapsible-tags-content overflow-hidden relative max-h-[31px]">
               <div className="collapsible-tags-content-inner">
                 {tags.map((tag) => (
-                  <div key={tag.id} className="rounded-md px-2 py-1 text-sm border hover:border-blue-400 hover:shadow-md inline-block cursor-pointer mx-2">
-                    <Link href={`/search?type=tag&tagid=${tag.id}`}>
-                      {tag.name}
-                    </Link>
+                  <div
+                    key={tag.id}
+                    className="rounded-md px-2 py-1 text-sm border hover:border-blue-400 hover:shadow-md inline-block cursor-pointer mx-2"
+                  >
+                    <Link href={`/search?tagid=${tag.id}`}>{tag.name}</Link>
                   </div>
                 ))}
               </div>
@@ -119,8 +120,14 @@ export default async function Blog({ params }) {
         <div className="my-8">
           <p className="my-2 p-2 border-b">ارسال کامنت</p>
           <form action="">
-            <textarea className="w-full rounded-md p-2" rows="5" defaultValue={"نظر خود را وارد کنید..."}></textarea>
-            <button className="border px-2 py-1 rounded-md cursor-pointer text-xs hover:border-blue-400">ارسال</button>
+            <textarea
+              className="w-full rounded-md p-2"
+              rows="5"
+              defaultValue={"نظر خود را وارد کنید..."}
+            ></textarea>
+            <button className="border px-2 py-1 rounded-md cursor-pointer text-xs hover:border-blue-400">
+              ارسال
+            </button>
           </form>
         </div>
         <div className="my-8">
