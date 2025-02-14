@@ -95,10 +95,13 @@ export const getTagsByPostId = async (postId) => {
   return data;
 };
 
-export const getLatestPosts = async (skip) => {
-  console.log("skip::", skip);
+export const getLatestPosts = async (userId, skip = 0) => {
+  // console.log("skip::", skip);
 
   const data = await prisma.post.findMany({
+    where: {
+      ...(userId && { user_id: userId }),
+    },
     skip,
     take: 6,
     orderBy: {
@@ -112,7 +115,7 @@ export const getLatestPosts = async (skip) => {
       },
     },
   });
-  console.log("latest posts:", data);
+  // console.log("latest posts:", data);
 
   return data;
 };

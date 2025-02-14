@@ -12,7 +12,7 @@ export default function BlogList() {
     const fetchLatestPosts = async () => {
       setIsLoading(true);
       try {
-        const data = await getLatestPosts(postNum);
+        const data = await getLatestPosts(undefined, postNum);
         setIsLoading(false);
         setBlogs((b) => [...b, ...data]);
         // setBlogs(data)
