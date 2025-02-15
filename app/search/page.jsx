@@ -8,7 +8,7 @@ import Blog from "../components/blog-summary";
 import EditorSwiper from "../components/editor-swiper.jsx";
 
 export default async function Search({ searchParams }) {
-  let data = null;
+  let data = [];
   let searchVal = null;
   let searchType = 0;
 
@@ -22,7 +22,7 @@ export default async function Search({ searchParams }) {
     const tag = await getTagById(searchParams.tagid);
     searchVal = tag?.name;
   } else if (searchParams.s) {
-    data = await getPostBySearchValue(searchParams.s);
+    data = await getPostBySearchValue(searchParams.s);    
     searchVal = searchParams.s;
   }
 
