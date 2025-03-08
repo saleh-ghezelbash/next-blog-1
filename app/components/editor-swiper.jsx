@@ -1,10 +1,24 @@
 "use client";
 
-// import { Carousel, Typography, Button } from "@material-tailwind/react";
+import { getRandomPosts } from '@/_lib/data-service';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
 
-export default function CategorySwiper() {
+export default function EditorSwiper() {
+    const [posts, setPosts] = useState([])
+    
+        useEffect(() => {
+            const handleFetch = async () => {
+                try {
+                    const data = await getRandomPosts();
+                    setPosts(data);
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+            handleFetch();
+        }, []);
+
     return (
         <div className='max-w-[1200px] mx-auto mt-6'>
             <h1 className="font-bold text-lg text-right mb-4 pb-4 border-b">انتخاب سردبیر</h1>
@@ -31,15 +45,7 @@ export default function CategorySwiper() {
                 modules={[]}
                 className="mySwiper"
             >
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 1</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 2</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 3</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 4</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 5</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 6</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 7</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 8</div></SwiperSlide>
-                <SwiperSlide ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>Slide 9</div></SwiperSlide>
+                {posts.map(post => <SwiperSlide key={post.id} ><div className='h-[200px] bg-blue-gray-100 rounded-xl'>{post.title}</div></SwiperSlide>)}
             </Swiper>
         </div>
     )

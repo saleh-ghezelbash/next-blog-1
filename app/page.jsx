@@ -1,5 +1,5 @@
 import CategoryGallery from "./components/category-gallery.jsx";
-import CategorySwiper from "./components/category-swiper.jsx";
+import PopularSwiper from "./components/popular-swiper.jsx";
 import EditorSwiper from "./components/editor-swiper.jsx";
 // import { MainSlider } from "./components/main-slider.jsx";
 import BlogList from "./components/blog-list.jsx";
@@ -15,16 +15,16 @@ export default function Home() {
           <NewestCategory category={"tech"}/>
         </div>
         <div className="w-full lg:w-2/3">
-          <BlogList />
+          <BlogList type={"latest"}/>
         </div>
       </div>
-      <CategorySwiper />
+      <PopularSwiper />
       <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row w-full gap-6 mt-6">
         <div className="w-full lg:w-1/3">
           <NewestCategory category={"ai"}/>
         </div>
         <div className="w-full lg:w-2/3">
-          <BlogList />
+          <BlogList type={"most-comments"}/>
         </div>
       </div>
       <EditorSwiper />

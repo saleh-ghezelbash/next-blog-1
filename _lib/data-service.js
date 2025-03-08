@@ -3,12 +3,11 @@
 import prisma from "@/prisma/prisma";
 
 export const getCategories = async () => {
-  const data = await prisma.category.findMany();
-  return data;
+  return await prisma.category.findMany();
 };
 
 export const getPostById = async (id) => {
-  const data = await prisma.post.findUnique({
+  return await prisma.post.findUnique({
     where: {
       id,
     },
@@ -17,11 +16,10 @@ export const getPostById = async (id) => {
     },
   });
 
-  return data;
 };
 
 export const getPostsByCategoryId = async (id) => {
-  const data = await prisma.post.findMany({
+  return await prisma.post.findMany({
     where: {
       category_id: id,
     },
@@ -34,21 +32,19 @@ export const getPostsByCategoryId = async (id) => {
     },
   });
 
-  return data;
 };
 
 export const getAuthorById = async (id) => {
-  const data = await prisma.user.findUnique({
+  return await prisma.user.findUnique({
     where: {
       id,
     },
   });
 
-  return data;
 };
 
 export const getSemilarPostsByCategoryId = async (id) => {
-  const data = await prisma.post.findMany({
+  return await prisma.post.findMany({
     where: {
       category_id: id,
     },
@@ -56,11 +52,10 @@ export const getSemilarPostsByCategoryId = async (id) => {
     take: 10,
   });
 
-  return data;
 };
 
 export const getPostComments = async (postId) => {
-  const data = await prisma.comment.findMany({
+  return await prisma.comment.findMany({
     where: {
       post_id: postId,
     },
@@ -68,21 +63,19 @@ export const getPostComments = async (postId) => {
       user: true,
     },
   });
-  return data;
 };
 
 export const getPostLikesNumber = async (postId) => {
-  const data = await prisma.like.count({
+  return await prisma.like.count({
     where: {
       post_id: postId,
     },
   });
 
-  return data;
 };
 
 export const getTagsByPostId = async (postId) => {
-  const data = await prisma.tag.findMany({
+  return await prisma.tag.findMany({
     where: {
       post_tag: {
         some: {
@@ -92,13 +85,10 @@ export const getTagsByPostId = async (postId) => {
     },
   });
 
-  return data;
 };
 
 export const getLatestPosts = async (userId, skip = 0) => {
-  // console.log("skip::", skip);
-
-  const data = await prisma.post.findMany({
+  return await prisma.post.findMany({
     where: {
       ...(userId && { user_id: userId }),
     },
@@ -115,13 +105,11 @@ export const getLatestPosts = async (userId, skip = 0) => {
       },
     },
   });
-  // console.log("latest posts:", data);
 
-  return data;
 };
 
 export const getLatestPostsByCategoryName = async (category) => {
-  const data = await prisma.post.findMany({
+  return await prisma.post.findMany({
     where: {
       category: {
         is: {
@@ -139,11 +127,10 @@ export const getLatestPostsByCategoryName = async (category) => {
     },
   });
 
-  return data;
 };
 
 export const getPostBySearchValue = async (val) => {
-  const data = await prisma.post.findMany({
+  return await prisma.post.findMany({
     where: {
       OR: [
         {
@@ -168,13 +155,12 @@ export const getPostBySearchValue = async (val) => {
     },
   });
 
-  return data;
 };
 
-export const getMostCommentsPosts = async () => {
-  const data = await prisma.post.findMany({
-    skip: 0,
-    take: 12,
+export const getMostCommentsPosts = async (skip = 0) => {
+  return await prisma.post.findMany({
+    skip,
+    take: 6,
     orderBy: [
       {
         comment: {
@@ -193,11 +179,10 @@ export const getMostCommentsPosts = async () => {
       },
     },
   });
-  return data;
 };
 
 export const getMostLikedPosts = async () => {
-  const data = await prisma.post.findMany({
+  return await prisma.post.findMany({
     skip: 0,
     take: 12,
     orderBy: [
@@ -219,11 +204,10 @@ export const getMostLikedPosts = async () => {
     },
   });
 
-  return data;
 };
 
 export const getPostsByTagId = async (tagId, skip = 0) => {
-  const data = await prisma.post.findMany({
+  return await prisma.post.findMany({
     where: {
       post_tag: {
         some: {
@@ -249,14 +233,16 @@ export const getPostsByTagId = async (tagId, skip = 0) => {
       created_at: "desc",
     },
   });
-  return data;
 };
 
 export const getTagById = async (tagId) => {
-  const data = await prisma.tag.findUnique({
+  return await prisma.tag.findUnique({
     where: {
       id: tagId,
     },
   });
-  return data;
+};
+
+export const getRandomPosts = async () => {
+  return await prisma.$queryRaw`SELECT * FROM post ORDER BY RANDOM() LIMIT 12`;
 };

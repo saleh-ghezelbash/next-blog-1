@@ -25,7 +25,7 @@ const ThemeToggle = () => {
     }, [darkTheme]);
 
     return (
-        <div className="cursor-pointer">
+        <div className="cursor-pointer hover:outline outline-1 outline-blue-400 rounded-full p-1">
             {darkTheme ? (
                 <BsMoon onClick={() => setDarkTheme(!darkTheme)} size={20} />
             ) : (
