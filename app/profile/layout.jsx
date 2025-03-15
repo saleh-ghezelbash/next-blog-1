@@ -1,6 +1,7 @@
 // "use client"
 
 import Link from "next/link";
+import { BsFileEarmarkPerson, BsBookmarkHeart, BsPersonLock, BsFillFileEarmarkRichtextFill  } from "react-icons/bs";
 // import { useRouter } from "next/router";
 
 // export const metadata = {
@@ -34,23 +35,23 @@ export default function ProfileLayout({ children }) {
 
 
                         <li className="py-1">
-                            <Link href={"/profile/account"} className="block rounded p-2 hover:bg-blue-gray-300">
-                                مشخصات
+                            <Link href={"/profile/account"} className="rounded p-2 hover:bg-blue-gray-300 flex gap-2 items-center">
+                              <BsFileEarmarkPerson size={24}/> مشخصات
                             </Link>
                         </li>
                         <li className="py-1">
-                            <Link href={"/profile/blogs"} className="block rounded p-2 hover:bg-blue-gray-300">
-                                پست ها
+                            <Link href={"/profile/blogs"} className="rounded p-2 hover:bg-blue-gray-300 flex gap-2 items-center">
+                               <BsFillFileEarmarkRichtextFill size={24} /> پست ها
                             </Link>
                         </li>
                         <li className="py-1">
-                            <Link href={"/profile/likes"} className="block rounded p-2 hover:bg-blue-gray-300">
-                                علاقمندی ها
+                            <Link href={"/profile/likes"} className="rounded p-2 hover:bg-blue-gray-300 flex gap-2 items-center">
+                               <BsBookmarkHeart size={24}/> علاقمندی ها
                             </Link>
                         </li>
                         <li className="py-1">
-                            <Link href={"/profile/auth"} className="block rounded p-2 hover:bg-blue-gray-300">
-                               رمز عبور
+                            <Link href={"/profile/auth"} className="rounded p-2 hover:bg-blue-gray-300 flex gap-2 items-center">
+                              <BsPersonLock size={24}/> رمز عبور
                             </Link>
                         </li>
 
