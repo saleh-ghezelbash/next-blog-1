@@ -246,3 +246,14 @@ export const getTagById = async (tagId) => {
 export const getRandomPosts = async () => {
   return await prisma.$queryRaw`SELECT * FROM post ORDER BY RANDOM() LIMIT 12`;
 };
+
+export const replyMessage = async (message, postId, userId, parentId) => {
+  await prisma.comment.create({
+    data: {
+      body: message,
+      user_id: userId,
+      post_id: postId,
+      parent_id: parentId
+    }
+  })
+}

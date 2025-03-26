@@ -12,12 +12,14 @@ import {
   getPostLikesNumber,
   getSemilarPostsByCategoryId,
   getTagsByPostId,
+  replyMessage,
 } from "@/_lib/data-service";
 import { getShamsiDate } from "@/utils/format-date";
 import Like from "@/app/components/like";
 
 export default async function Blog({ params }) {
   const id = await params.id;
+  const user = null;
   // let [isLiked, setIsLiked] = useState(false)
 
   const post = await getPostById(id);
@@ -32,6 +34,14 @@ export default async function Blog({ params }) {
   // const author = await getAuthorById(post.user_id);
   // const postsCategory = await getSemilarPostsByCategoryId(post.category_id);
   // const comments = await getPostComments(post.id, post.user_id);
+
+  async function reply(formData) {
+    'use server'
+
+    const message = formData.get('reply')
+    if (!message) return;
+    await replyMessage(message, id, 1, null)
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -119,13 +129,14 @@ export default async function Blog({ params }) {
         </div>
         <div className="my-8">
           <p className="my-2 p-2 border-b">ارسال کامنت</p>
-          <form action="">
+          <form action={reply}>
             <textarea
               className="w-full rounded-md p-2"
               rows="5"
-              defaultValue={"نظر خود را وارد کنید..."}
+              placeholder={"نظر خود را وارد کنید..."}
+              name="reply"
             ></textarea>
-            <button className="border px-2 py-1 rounded-md cursor-pointer text-xs hover:border-blue-400">
+            <button type="submit" disabled={!user} className="border px-2 py-1 rounded-md cursor-pointer text-xs hover:border-blue-400">
               ارسال
             </button>
           </form>
