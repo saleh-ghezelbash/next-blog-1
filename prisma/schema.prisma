@@ -3,14 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("LOCAL_DATABASE_URL")
+  provider = "sqlite"
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model category {
-  id         BigInt   @id(map: "Category_pkey") @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
+  id         BigInt   @id @default(autoincrement())
+  created_at DateTime @default(now())
   name       String?
   name_fa    String?
   post       post[]
@@ -19,7 +18,7 @@ model category {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model comment {
   id            BigInt    @id @default(autoincrement())
-  created_at    DateTime  @default(now()) @db.Timestamptz(6)
+  created_at    DateTime  @default(now())
   user_id       BigInt?
   post_id       BigInt?
   body          String?
@@ -33,7 +32,7 @@ model comment {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model like {
   id         BigInt   @id @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
+  created_at DateTime @default(now())
   user_id    BigInt?
   post_id    BigInt?
   post       post?    @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -43,7 +42,7 @@ model like {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model post {
   id          BigInt     @id @default(autoincrement())
-  created_at  DateTime   @default(now()) @db.Timestamptz(6)
+  created_at  DateTime   @default(now())
   title       String?    @unique
   body        String?
   image       String?
@@ -59,7 +58,7 @@ model post {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model post_tag {
   id         BigInt   @id @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
+  created_at DateTime @default(now())
   post_id    BigInt?
   tag_id     BigInt?
   post       post?    @relation(fields: [post_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -68,16 +67,16 @@ model post_tag {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model tag {
-  id         BigInt     @id(map: "Tag_pkey") @default(autoincrement())
-  created_at DateTime   @default(now()) @db.Timestamptz(6)
-  name       String?    @unique(map: "Tag_name_key")
+  id         BigInt     @id @default(autoincrement())
+  created_at DateTime   @default(now())
+  name       String?    @unique
   post_tag   post_tag[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model user {
   id         BigInt    @id @default(autoincrement())
-  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  created_at DateTime  @default(now())
   username   String?   @unique
   password   String?
   bio        String?
